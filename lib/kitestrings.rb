@@ -1,3 +1,4 @@
+require 'rails'
 require "kitestrings/version"
 require "kitestrings/railtie"
 

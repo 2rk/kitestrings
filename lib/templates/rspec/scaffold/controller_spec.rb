@@ -13,7 +13,10 @@ describe <%= controller_class_name %>Controller do
   end
 
   context 'not logged in' do
-    before { sign_out :user }
+    before do
+      <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
+      sign_out :user
+    end
 
     {index: :get, show: :get, new: :get, create: :post, edit: :get, update: :put, destroy: :delete}.each do |v, m|
       it "#{m} #{v} should logout" do
@@ -36,15 +39,15 @@ describe <%= controller_class_name %>Controller do
       it { should assign_to(:<%= table_name %>).with_items([<%= file_name %>]) }
       it { should render_template :index }
       it { should have_only_fractures(:new_<%= file_name %>_link) }
-    end
+      end
 
-<% end -%>
+      <% end -%>
     describe 'GET show' do
       before { get :show, id: <%= file_name %> }
 
-      it { should assign_to(:<%= file_name %>).with(<%= file_name %>) }
-      it { should render_template :show }
-      it { should have_only_fractures(:edit_<%= file_name %>_link) }
+    it { should assign_to(:<%= file_name %>).with(<%= file_name %>) }
+    it { should render_template :show }
+    it { should have_only_fractures(:edit_<%= file_name %>_link) }
     end
 
     describe 'GET new' do
@@ -60,6 +63,7 @@ describe <%= controller_class_name %>Controller do
     describe 'POST create' do
       context 'valid' do
         before do
+          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(true)
           post :create
         end
@@ -71,10 +75,10 @@ describe <%= controller_class_name %>Controller do
 
       context 'invalid' do
         before do
+          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(false)
           post :create
         end
-
         it { should assign_to(:<%= file_name %>).with_kind_of(<%= class_name %>) }
         #it { should assign_to('<%= file_name %>.parent').with(parent) }
         it { should render_template :new }
@@ -95,6 +99,7 @@ describe <%= controller_class_name %>Controller do
     describe 'PUT update' do
       context 'valid' do
         before do
+          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(true)
           put :update, id: <%= file_name %>
         end
@@ -105,6 +110,7 @@ describe <%= controller_class_name %>Controller do
       context 'invalid' do
         before do
           <%= file_name %>
+          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(false)
           put :update, id: <%= file_name %>
         end
