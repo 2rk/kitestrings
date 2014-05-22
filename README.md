@@ -16,9 +16,18 @@ Or install it yourself as:
 
     $ gem install kitestrings
 
-## Usage
+Once installed run
 
-TODO: Write usage instructions here
+    rails g kitestrings:install
+
+If installed using our template file, this will already be done for you.
+
+## Contains
+
+Our scaffold templates (views, controlller)
+
+A rake task which will run `db:test:prepare` after you run a migration and `db:fixtures:load` so your selections are properly
+loaded in the test db.
 
 ## Contributing
 
