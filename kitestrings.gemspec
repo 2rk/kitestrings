@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Kitestrings::VERSION
   spec.authors       = ["ridget"]
   spec.email         = ["tom.ridge@tworedkites.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{For all the 2rk goodness}
+  spec.description   = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
