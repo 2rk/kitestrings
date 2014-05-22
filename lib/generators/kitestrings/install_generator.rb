@@ -27,6 +27,10 @@ module Kitestrings
       def copy_rspec_files
         directory "rspec", "lib/templates/rspec"
       end
+
+      def copy_spec_ext_files
+        directory "spec_ext"
+      end
     end
   end
 end
