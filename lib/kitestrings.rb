@@ -1,5 +1,6 @@
+require 'rails'
 require "kitestrings/version"
+require "kitestrings/railtie"
 
 module Kitestrings
-  # Your code goes here...
 end
