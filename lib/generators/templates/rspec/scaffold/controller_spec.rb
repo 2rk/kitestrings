@@ -12,17 +12,19 @@ describe <%= controller_class_name %>Controller do
     Fracture.define_selector :cancel_edit_<%= file_name %>_link
   end
 
+  # stub strong params
+  before { controller.stub(<%= file_name %>_params: {}) }
+
   context 'not logged in' do
     before do
-      <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
       sign_out :user
     end
 
     {index: :get, show: :get, new: :get, create: :post, edit: :get, update: :put, destroy: :delete}.each do |v, m|
       it "#{m} #{v} should logout" do
         self.send(m, v, id: <%= file_name %>)
-        should redirect_to new_user_session_path
-      end
+    should redirect_to new_user_session_path
+  }
     end
   end
 
@@ -63,7 +65,6 @@ describe <%= controller_class_name %>Controller do
     describe 'POST create' do
       context 'valid' do
         before do
-          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(true)
           post :create
         end
@@ -75,7 +76,6 @@ describe <%= controller_class_name %>Controller do
 
       context 'invalid' do
         before do
-          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(false)
           post :create
         end
@@ -99,7 +99,6 @@ describe <%= controller_class_name %>Controller do
     describe 'PUT update' do
       context 'valid' do
         before do
-          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(true)
           put :update, id: <%= file_name %>
         end
@@ -110,7 +109,6 @@ describe <%= controller_class_name %>Controller do
       context 'invalid' do
         before do
           <%= file_name %>
-          <%= controller_class_name %>Controller.any_instance.stub(<%= file_name %>_params: {})
           <%= class_name %>.any_instance.stub(:valid?).and_return(false)
           put :update, id: <%= file_name %>
         end
