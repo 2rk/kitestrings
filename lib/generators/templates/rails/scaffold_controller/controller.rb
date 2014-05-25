@@ -24,7 +24,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def create
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 
-if @<%= orm_instance.save %>
+    if @<%= orm_instance.save %>
       redirect_to @<%= singular_table_name %>, notice: <%= "'#{human_name} was successfully created.'" %>
     else
       render :new
@@ -39,24 +39,24 @@ if @<%= orm_instance.save %>
     end
   end
 
-def destroy
-  @<%= orm_instance.destroy %>
+  def destroy
+    @<%= orm_instance.destroy %>
     redirect_to <%= index_helper %>_url, notice: <%= "'#{human_name} was successfully destroyed.'" %>
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
-  @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+      @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
     end
 
     # Only allow a trusted parameter "white list" through.
     def <%= "#{singular_table_name}_params" %>
-  <%- if attributes_names.empty? -%>
+    <%- if attributes_names.empty? -%>
       params[:<%= singular_table_name %>]
       <%- else -%>
-  params.require(:<%= singular_table_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
-  <%- end -%>
-end
+      params.require(:<%= singular_table_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
+    <%- end -%>
+    end
 end
 <% end -%>
