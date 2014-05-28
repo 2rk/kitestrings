@@ -29,8 +29,6 @@ module Kitestrings
       end
 
       def copy_app_view_files
-        source_root File.expand_path("../../app", __FILE__)
-
         directory "views", "app/views"
       end
     end
