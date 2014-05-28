@@ -28,8 +28,10 @@ module Kitestrings
         directory "rspec", "lib/templates/rspec"
       end
 
-      def copy_spec_ext_files
-        directory "spec_ext"
+      def copy_app_view_files
+        source_root File.expand_path("../../app", __FILE__)
+
+        directory "views", "app/views"
       end
     end
   end
