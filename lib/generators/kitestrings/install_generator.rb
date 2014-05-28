@@ -29,7 +29,8 @@ module Kitestrings
       end
 
       def copy_app_view_files
-        directory "views", "app/views"
+        copy_file "views/application/_navigation.html.haml", "app/views/application/_navigation.html.haml"
+        copy_file "views/layouts/application.html.haml", "app/views/layouts/application.html.haml"
       end
     end
   end
