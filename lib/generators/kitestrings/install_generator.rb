@@ -28,6 +28,10 @@ module Kitestrings
         directory "rspec", "lib/templates/rspec"
       end
 
+      def copy_spec_ext
+        directory "spec_ext", "spec_ext"
+      end
+
       def copy_app_view_files
         copy_file "views/application/_navigation.html.haml", "app/views/application/_navigation.html.haml"
         copy_file "views/layouts/application.html.haml", "app/views/layouts/application.html.haml"

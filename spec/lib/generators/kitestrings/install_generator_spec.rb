@@ -42,7 +42,7 @@ describe Kitestrings::Generators::InstallGenerator do
   ].each do |file|
       it "created #{file}" do
         path = File.join(@dir, file)
-        expect(File.exist?(path)).to be_true
+        expect(File.exist?(path)).to be_truthy
       end
     end
   end
