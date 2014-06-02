@@ -1,3 +1,4 @@
+# A validator to validate the length of an array. Works on a collection proxy (has_many relationship) too.
 class ArrayValidator < ActiveModel::EachValidator
   # Validate the value is an Array and optionally that the number of items in it is at least a minimum or at most a
   # maximum.
