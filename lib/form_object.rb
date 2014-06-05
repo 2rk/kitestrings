@@ -1,6 +1,14 @@
+# This module is to help with using Form Objects that are backed by ActiveRecord resources. The goal
+# is to make a from object act like the underlying model class, but with its own set of validations.
+#
+# Note that saving the form object requires validations in the form object to pass *AND* the validations
+# in the underlying model object. Validation errors in the underlying model object will be included in
+# the errors of the form object.
 module FormObject
   extend ActiveSupport::Concern
   include ActiveModel::Model
+  include ActiveRecord::AttributeAssignment
+  include ActiveRecord::Persistence
 
   module ClassMethods
     # Set up the Form Object class to be a form object for a given model.
@@ -45,5 +53,24 @@ module FormObject
     if valid?
       resource.save
     end
+  end
+
+  # The form object is valid when its validations pass *AND* the underlying model validations pass. If there
+  # are errors in the underlying resource, those errors are copied into the errors object for this form object
+  # so that they exist in a single place (easy for the form to work with)
+  def valid?
+    result = [super, resource.valid?].all?
+
+    # include any errors in the resource object in the +errors+ for this form object. This is useful
+    # for uniqueness validation or existing validations in the model class so that they don't need
+    # to be duplicated in the form object. (And especially uniqueness validators can only be run in
+    # the ActiveRecord::Base model class.
+    unless result
+      resource.errors.each do |attr, error|
+        errors[attr] << error unless errors[attr].include?(error)
+      end
+    end
+
+    result
   end
 end
