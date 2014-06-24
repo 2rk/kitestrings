@@ -1,0 +1,56 @@
+class Message < ActiveRecord::Base
+  include Async
+
+  DELIVERY_TIMEOUT = 5
+
+<%- if Rails.version =~ /^3/ %>
+  attr_accessible :clicked_at, :link, :sent_at, :template, :user_id, :user, :options, :context, :subject
+
+<% end %>
+  serialize :options
+
+  include Rails.application.routes_url_helpers
+
+  after_create :send_email
+
+  ## RELATIONSHIPS
+
+  belongs_to :context, polymorphic: true
+  belongs_to :user
+
+  ## VALIDATIONS
+
+  validates :user, presence: true
+
+  ## SCOPES
+
+  scope :latest, -> { order('created_at DESC') }
+
+  ## METHODS
+
+  def send_email
+    async do
+      Timeout.timeout DELIVERY_TIMEOUT do
+        mail.deliver
+
+        # always update the sent at, even if the email address is not on the whitelist to simulate what would happen
+        self.update_column(:sent_at, Time.now)
+      end
+    end
+  end
+
+  # prepare a mail object ready for delivery by email or display on the screen
+  def mail
+    @mail ||= MessageMailer.prepare_message(self, context)
+  end
+
+  # The "view" link. This is the link to the messages controller that marks the message
+  # as "clicked" and redirects to the actual link stored in the message record.
+  def view_link
+    message_url(self, :only_path => false)
+  end
+
+  def name
+    "Message ID: #{id}"
+  end
+end
