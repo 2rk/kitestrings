@@ -44,6 +44,12 @@ module FormObject
         end
       end
       delegate *methods_to_delegate, :to => resource_name
+      include DelegateEverything if options[:delegate_everything]
+
+      # create a default initializer which will set the resource when a single parameter is passed in.
+      define_method :initialize do |object=nil|
+        instance_variable_set("@#{resource_name}", object)
+      end
     end
   end
 
@@ -72,5 +78,19 @@ module FormObject
     end
 
     result
+  end
+
+  module DelegateEverything
+    def method_missing(method, *args, &block)
+      if resource.respond_to?(method)
+        resource.send(method, *args, &block)
+      else
+        super
+      end
+    end
+
+    def respond_to_missing?(method, include_all)
+      resource.respond_to?(method, include_all) || super
+    end
   end
 end
