@@ -7,8 +7,6 @@
 module FormObject
   extend ActiveSupport::Concern
   include ActiveModel::Model
-  include ActiveRecord::AttributeAssignment
-  include ActiveRecord::Persistence
 
   module ClassMethods
     # Set up the Form Object class to be a form object for a given model.
