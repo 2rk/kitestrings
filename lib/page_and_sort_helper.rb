@@ -88,11 +88,11 @@ module PageAndSortHelper
             end
       end
 
-      if options[:skip_pagination]
-        scope
-      else
-        # apply kaminari pagination
+      # apply kaminari pagination
+      if scope.respond_to?(:page) && !options[:skip_pagination]
         scope.page(params[:page])
+      else
+        scope
       end
     end
   end

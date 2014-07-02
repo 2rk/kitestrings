@@ -15,3 +15,5 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+Dir["spec/support/**/*.rb"].each { |file| load file }
