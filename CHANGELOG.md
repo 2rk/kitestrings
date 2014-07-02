@@ -3,6 +3,7 @@
 ## 1.0.3
 
 * Added an Access Denied page to be shown when a CanCan::AccessDenied error occurs (except in develop/test)
+* Added UAT and INTEG environments and deploy files to install generator.
 
 ## 1.0.2
 
