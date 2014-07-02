@@ -78,6 +78,14 @@ module FormObject
     result
   end
 
+  # implement update as per ActiveRecord::Persistence
+  def update(attrs)
+    assign_attibutes(attrs)
+    save
+  end
+
+  alias update_attributes update
+
   module DelegateEverything
     def method_missing(method, *args, &block)
       if resource.respond_to?(method)
