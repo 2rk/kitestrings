@@ -35,6 +35,23 @@ module Kitestrings
       def copy_app_view_files
         copy_file "views/application/_navigation.html.haml", "app/views/application/_navigation.html.haml"
         copy_file "views/layouts/application.html.haml", "app/views/layouts/application.html.haml"
+        copy_file "views/public/403.html", "app/views/public/403.html"
+      end
+
+      def setup_application_controller
+        inject_into_file "app/controllers/application_controller.rb", :after => /protect_from_forgery.*$/ do
+          <<-EOF
+
+
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from CanCan::AccessDenied do |exception|
+      # Notify errbit if you would like to:
+      # Airbrake.notify(exception)
+      render 'public/403', status: 403, layout: 'none'
+    end
+  end
+          EOF
+        end
       end
     end
   end
