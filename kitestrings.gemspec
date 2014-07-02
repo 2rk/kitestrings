@@ -6,8 +6,8 @@ require 'kitestrings/version'
 Gem::Specification.new do |spec|
   spec.name          = "kitestrings"
   spec.version       = Kitestrings::VERSION
-  spec.authors       = ["ridget"]
-  spec.email         = ["tom.ridge@tworedkites.com"]
+  spec.authors       = ["ridget", "Matt Connolly"]
+  spec.email         = ["tom.ridge@tworedkites.com", "matt.connolly@tworedkites.com"]
   spec.summary       = %q{For all the 2rk goodness}
   spec.description   = %q{}
   spec.homepage      = ""
