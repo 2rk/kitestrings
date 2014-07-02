@@ -5,17 +5,20 @@ require 'airbrake/capistrano'
 
 set :stages, %w(integ, uat, production)
 set :default_stage, "integ"
-set :application, 'pwi'
-set :user, 'pwi'
+set :application, 'APP_NAME'
+set :user, 'APP_NAME'
 set (:deploy_to) { "/home/#{user}/apps/#{rails_env}" }
 set :deploy_via, :remote_cache
 set :use_sudo, false
 set :scm, 'git'
-#set :repository, 'git@github.com:2rk/pwi.git'
+
+#set :repository, 'git@github.com:2rk/APP_NAME.git'
 
 set :ssl, false
-# set :ssl_certificates_path, '/home/amt/ssl'
-# set :ssl_certificates_name, 'amt'
+# set :ssl_certificates_path, '/home/APP_NAME/ssl'
+# set :ssl_certificates_name, 'APP_NAME'
+
+set :rvm_ruby_string, "2.1.1"
 
 set :mysql_password, YAML::load_file("config/database.yml.server")["production"]["password"]
 set :bundle_flags, "--deployment"
@@ -98,11 +101,11 @@ conf
   end
 end
 
-namespace :ruby_make do
+namespace :rake do
   desc "Run a task on a remote server."
   # run like: cap staging rake:invoke task=a_certain_task
   task :invoke do
-    run("cd #{deploy_to}/current; /usr/bin/env rake #{ENV['task']} RAILS_ENV=#{rails_env}")
+    run("cd #{deploy_to}/current; bin/rake #{ENV['task']} RAILS_ENV=#{rails_env}")
   end
 end
 
@@ -121,16 +124,15 @@ namespace :deploy do
   end
   desc "reload the database with seed data"
   task :seed do
-    run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=#{rails_env}"
+    run "cd #{current_path}; bin/rake db:seed RAILS_ENV=#{rails_env}"
   end
 end
 
-namespace :rvm do
-  task :trust_rvmrc do
-    run "rvm rvmrc trust #{release_path}"
-  end
-end
-
-after "deploy", "rvm:trust_rvmrc"
 after 'deploy:setup', 'deploy:create_database', 'deploy:github_ssh_key', 'deploy:nginx_conf', 'deploy:create_shared_database_config'
 after 'deploy:cold', 'deploy:airbrake_test'
+
+before 'deploy:setup', 'rvm:install_rvm' # update RVM
+before 'deploy:setup', 'rvm:install_ruby'
+
+# load additional deploy steps and configuration from lib/capistrano/*.cap files:
+Dir["lib/capistrano/*.cap"].each { |file| load file }

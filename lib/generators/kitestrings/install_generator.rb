@@ -8,12 +8,10 @@ module Kitestrings
 
       desc "Copies 2rk relevant templates to the relevant directory"
 
-      def copy_deploy
-        copy_file "deploy.rb", "config/deploy.rb"
-      end
-
-      def copy_deploy_files
-        directory "deploy", "config/deploy"
+      def copy_config_files
+        copy_file "config/deploy.rb", "config/deploy.rb"
+        directory "config/deploy", "config/deploy"
+        directory "config/environments", "config/environments"
       end
 
       def copy_haml_files
@@ -52,6 +50,11 @@ module Kitestrings
   end
           EOF
         end
+      end
+
+      def setup_directories
+        empty_directory("lib/capistrano")
+        create_file("lib/capistrano/.keep")
       end
     end
   end

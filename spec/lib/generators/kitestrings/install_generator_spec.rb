@@ -34,6 +34,8 @@ describe Kitestrings::Generators::InstallGenerator do
         config/deploy/integ.rb
         config/deploy/uat.rb
         config/deploy/production.rb
+        config/environments/integ.rb
+        config/environments/uat.rb
         lib/templates/haml/scaffold/_form.html.haml
         lib/templates/haml/scaffold/edit.html.haml
         lib/templates/haml/scaffold/index.html.haml
@@ -48,6 +50,7 @@ describe Kitestrings::Generators::InstallGenerator do
         app/views/public/403.html
         app/views/layouts/application.html.haml
         app/views/application/_navigation.html.haml
+        lib/capistrano/.keep
   ].each do |file|
       it "created #{file}" do
         path = File.join(destination_root, file)
