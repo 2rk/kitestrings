@@ -1,6 +1,5 @@
 require 'active_record'
 
-puts "creating in memory sql lite database"
 ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":memory:"
 
 ActiveRecord::Migration.create_table :record do |t|
