@@ -7,7 +7,7 @@ describe Kitestrings::Generators::InstallGenerator do
 
   include GeneratorSupport
 
-  destination File.expand_path("../../../../tmp", __FILE__)
+  destination File.expand_path("../../../../../tmp", __FILE__)
 
   before :all do
     prepare_destination
