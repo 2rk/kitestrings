@@ -28,7 +28,7 @@ module Kitestrings::Menu
     # return the menu display name for the object. This defaults to the .name method of an instance, and the
     # localised human name for classes.
     def name
-      object.menu_display_name
+      object.try(:menu_display_name)
     end
 
     # return the name of a menu partial to use for contextual menus relating to this item.
