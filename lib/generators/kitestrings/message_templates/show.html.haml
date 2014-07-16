@@ -1,0 +1,32 @@
+%h1 Message
+
+.row.form-horizontal
+  .col-md-1
+    %label.control-label Subject
+  .col-md-9
+    %p.form-text
+      %b= @message.subject
+.row
+  .col-md-1
+    %label.control-label Date Sent
+  .col-md-9
+    %p.form-text
+      = @message.sent_at ? l(@message.sent_at) : "(not sent)"
+.row
+  .col-md-1
+    %label.control-label Body
+  .col-md-9
+    %p
+      = simple_format(@message.mail_body)
+      -# or add the `gem "rails_autolink"` to Gemfile to detect links in the message body:
+      -#= simple_format(auto_link(@message.mail_body))
+
+-#- if @message.mail.attachments.any?
+-#  .row
+-#    .col-md-1
+-#      %label.control-label Attachments
+-#    .col-md-9
+-#      %ul
+-#        - @message.mail.attachments.each_with_index do |attachment, index|
+-#          %li
+-#            = link_to(attachment.filename, company_user_message_attachment_path(@company, @user, @message, index+1))

@@ -9,7 +9,7 @@ class Message < ActiveRecord::Base
 <% end %>
   serialize :options
 
-  include Rails.application.routes_url_helpers
+  include Rails.application.routes.url_helpers
 
   after_create :send_email
 
@@ -41,7 +41,7 @@ class Message < ActiveRecord::Base
 
   # prepare a mail object ready for delivery by email or display on the screen
   def mail
-    @mail ||= MessageMailer.prepare_message(self, context)
+    @mail ||= MessageMailer.prepare_message(self)
   end
 
   # The "view" link. This is the link to the messages controller that marks the message
@@ -52,5 +52,22 @@ class Message < ActiveRecord::Base
 
   def name
     "Message ID: #{id}"
+  end
+
+  def add_attachments(mailer)
+    # This is called by the mailer to add any attachments. For example:
+    # if context.is_a? CalendarEvent
+    #   mailer.attachments.inline["calendar.ics"] = context.to_ical
+    # end
+  end
+
+  # return the mail body as a string, skipping any attachment parts that may be in the message
+  def mail_body
+    if mail.multipart?
+      part = mail.parts.select { |p| p.text? && !p.attachment? }.first
+      part.body.to_s
+    else
+      mail.body.to_s
+    end
   end
 end

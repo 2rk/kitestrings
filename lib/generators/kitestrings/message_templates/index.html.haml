@@ -1,0 +1,26 @@
+.page-header
+  %h1 Listing messages
+
+.row
+  .col-md-12
+    %table.table.table-striped
+      %tr
+        %th.subject= sortable_title :subject
+        %th= sortable_title :sent_at
+        %th= sortable_title :user_name
+        %th Link
+        %th= sortable_title :clicked_at
+        %th= sortable_title :id
+
+      - @messages.each do |message|
+        %tr
+          %td.subject= message.user && link_to(message.subject || "(none)", user_message_path(message.user_id, message))
+          %td= l message.created_at
+          %td= message.user && link_to_if(can?(:show, message.user), message.user.try(:full_name), user_path(message.user.id))
+          %td= link_to message.link, message_path(message)
+          %td= message.clicked_at ? l(message.clicked_at) : nil
+          %td= message.id
+    %br
+
+    %p.pagination
+      = paginate @messages
