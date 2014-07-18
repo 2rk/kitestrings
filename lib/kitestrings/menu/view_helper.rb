@@ -4,7 +4,9 @@ module Kitestrings
     # Generate a <li><a href="path">name</li> html string.
     #
     # This is done from a Menu::Item object that fetches the path and display name from a resource(model, or any
-    # object with Menu::Model included in it.).
+    # object with Menu::Model included in it.), or an array that would be passed to polymorphic_path
+    #
+    # All other options are passed to +link_to+
     #
     # Examples:
     #    menu_link_to(current_menu_item)
@@ -14,6 +16,7 @@ module Kitestrings
     #    menu_link_to(@resource) # will link to resource_path(@resource)
     #    menu_link_to([@user, @mail]) # will link to user_mail_path(@user, @mail)
     #    menu_link_to([@user, Message]) # will link to user_messages_path(@user)
+    #    menu_link_to(@user, :id => :user_link, :class => "me") # pass options to link_to
     #
     def menu_link_to(item, options={})
       case
