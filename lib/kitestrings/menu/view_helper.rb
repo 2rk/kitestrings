@@ -56,12 +56,11 @@ module Kitestrings
           name = name[0..30] + "…"
         end
         options[:id] ||= item.link_id
-        options[:class] ||= ''
-        options[:class] += ' active' if active
+        li_class = active ? 'active' : ''
 
         # only generate the <li> tag if we have a name to display and a path to go to.
         if name.present?
-          content_tag(:li, link_to(name, path, options))
+          content_tag(:li, link_to(name, path, options), :class => li_class)
         end
       end
     end
