@@ -18,8 +18,7 @@ set :ssl, false
 # set :ssl_certificates_path, '/home/APP_NAME/ssl'
 # set :ssl_certificates_name, 'APP_NAME'
 
-set :rvm_ruby_string, "2.1.1"
-
+set :rvm_ruby_string, File.read(".ruby-version").chomp
 set :mysql_password, YAML::load_file("config/database.yml.server")["production"]["password"]
 set :bundle_flags, "--deployment"
 
@@ -71,9 +70,11 @@ conf
 
 
   task :github_ssh_key do
-    run "ssh-keygen -t rsa -f ~/.ssh/id_rsa -P ''; ssh -oStrictHostKeyChecking=no git@github.com; cat .ssh/id_rsa.pub"
+    run "if [ ! -f ~/.ssh/id_rsa ]; then ssh-keygen -t rsa -f ~/.ssh/id_rsa -P ''; fi"
+    # This will return an error back but it is not an issue
+    run "ssh -T -oStrictHostKeyChecking=no git@github.com; true"
+    run "cat .ssh/id_rsa.pub"
   end
-
   task :symlink_config do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   end
@@ -101,7 +102,7 @@ conf
   end
 end
 
-namespace :rake do
+namespace :ruby_make do
   desc "Run a task on a remote server."
   # run like: cap staging rake:invoke task=a_certain_task
   task :invoke do
