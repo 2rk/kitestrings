@@ -134,6 +134,8 @@ after 'deploy:cold', 'deploy:airbrake_test'
 
 before 'deploy:setup', 'rvm:install_rvm' # update RVM
 before 'deploy:setup', 'rvm:install_ruby'
+# only keep 5 most recent releases
+after 'deploy:restart', 'deploy:cleanup'
 
 # load additional deploy steps and configuration from lib/capistrano/*.cap files:
 Dir["lib/capistrano/*.cap"].each { |file| load file }
