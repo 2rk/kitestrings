@@ -35,6 +35,7 @@ namespace :deploy do
   ssl on;
   ssl_certificate #{ssl_certificates_path}/#{ssl_certificates_name}.crt;
   ssl_certificate_key #{ssl_certificates_path}/#{ssl_certificates_name}.key;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 
   passenger_set_cgi_param HTTPS on;
   passenger_set_cgi_param SSL_CLIENT_S_DN $ssl_client_s_dn;
@@ -46,7 +47,7 @@ namespace :deploy do
 server {
   listen      80;
   server_name #{hostnames};
-  rewrite     ^   https://#{hostnames}$request_uri? permanent;
+  return     301   https://#{hostnames}$request_uri?;
 ssl_conf
 
     conf = <<conf
