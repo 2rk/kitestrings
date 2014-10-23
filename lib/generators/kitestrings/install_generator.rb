@@ -26,6 +26,10 @@ module Kitestrings
         directory "rspec", "lib/templates/rspec"
       end
 
+      def copy_spec_files
+        directory "spec", "lib/templates/spec"
+      end
+
       def copy_spec_ext
         directory "spec_ext", "spec_ext"
       end
