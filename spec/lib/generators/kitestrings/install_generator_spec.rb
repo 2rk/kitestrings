@@ -19,6 +19,7 @@ describe Kitestrings::Generators::InstallGenerator do
     %w[
         spec_ext/my_ip_spec.rb
         spec_ext/spec_helper_ext.rb
+        spec/spec_helper.rb
         config/deploy.rb
         config/deploy/integ.rb
         config/deploy/uat.rb

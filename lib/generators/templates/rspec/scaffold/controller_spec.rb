@@ -23,8 +23,8 @@ describe <%= controller_class_name %>Controller do
     {index: :get, show: :get, new: :get, create: :post, edit: :get, update: :put, destroy: :delete}.each do |v, m|
       it "#{m} #{v} should logout" do
         self.send(m, v, id: <%= file_name %>)
-    should redirect_to new_user_session_path
-  }
+        should redirect_to new_user_session_path
+      end
     end
   end
 
