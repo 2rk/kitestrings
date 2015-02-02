@@ -1,4 +1,4 @@
-require_relative 'spec_helper_ext'
+require_relative 'rails_helper_ext'
 
 describe "My IP" do
   it "has an I Paddress" do

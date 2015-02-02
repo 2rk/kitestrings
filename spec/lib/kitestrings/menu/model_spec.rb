@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'kitestrings/menu'
 require 'kitestrings/menu/model'
 
