@@ -31,7 +31,7 @@ module Kitestrings
       end
 
       def copy_spec_support_files
-        directory "support", "spec/support/render_views"
+        directory "support", "spec/support"
       end
 
       def copy_spec_ext
