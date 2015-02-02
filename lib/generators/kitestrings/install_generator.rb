@@ -28,7 +28,10 @@ module Kitestrings
 
       def copy_spec_files
         directory "spec", "lib/templates/spec"
-        directory "spec/support", "lib/templates/spec/support"
+      end
+
+      def copy_spec_support_files
+        directory "support", "spec/support/render_views"
       end
 
       def copy_spec_ext
