@@ -27,15 +27,11 @@ module Kitestrings
       end
 
       def copy_spec_files
-        directory "spec", "lib/templates/spec"
+        copy_file "spec/rails_helper.rb", "spec/rails_helper.rb"
       end
 
       def copy_spec_support_files
         directory "support", "spec/support"
-      end
-
-      def copy_spec_ext
-        directory "spec_ext", "spec_ext"
       end
 
       def copy_app_view_files
@@ -60,10 +56,6 @@ module Kitestrings
         end
       end
 
-      def setup_directories
-        empty_directory("lib/capistrano")
-        create_file("lib/capistrano/.keep")
-      end
     end
   end
 end

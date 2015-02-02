@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 require 'fileutils'
 require 'generator_spec'
 require 'generators/kitestrings/messages_generator'

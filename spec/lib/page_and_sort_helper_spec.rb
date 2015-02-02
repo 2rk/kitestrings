@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 require 'page_and_sort_helper'
 
 describe PageAndSortHelper do

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 require 'fileutils'
 require 'generator_spec'
 require 'generators/kitestrings/install_generator'
@@ -17,8 +17,6 @@ describe Kitestrings::Generators::InstallGenerator do
 
   context "check files" do
     %w[
-        spec_ext/my_ip_spec.rb
-        spec_ext/rails_helper_ext.rb
         spec/rails_helper.rb
         config/deploy.rb
         config/deploy/integ.rb
@@ -40,7 +38,6 @@ describe Kitestrings::Generators::InstallGenerator do
         app/views/public/403.html
         app/views/layouts/application.html.haml
         app/views/application/_navigation.html.haml
-        lib/capistrano/.keep
   ].each do |file|
       it "created #{file}" do
         path = file_path(file)
