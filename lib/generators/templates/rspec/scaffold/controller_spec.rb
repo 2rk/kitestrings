@@ -22,7 +22,7 @@ describe <%= controller_class_name %>Controller do
     {index: :get, show: :get, new: :get, create: :post, edit: :get, update: :put, destroy: :delete}.each do |v, m|
       it "#{m} #{v} should logout" do
         self.send(m, v, id: <%= file_name %>)
-        should redirect_to new_user_session_path
+        expect(response).to redirect_to new_user_session_path
       end
     end
   end
@@ -37,28 +37,28 @@ describe <%= controller_class_name %>Controller do
         get :index
       end
 
-      it { should assign_to(:<%= table_name %>).with_items([<%= file_name %>]) }
-      it { should render_template :index }
-      it { should have_only_fractures(:new_<%= file_name %>_link) }
+      it { expect(response).to assign_to(:<%= table_name %>).with_items([<%= file_name %>]) }
+      it { expect(response).to render_template :index }
+      it { expect(response).to have_only_fractures(:new_<%= file_name %>_link) }
       end
 
       <% end -%>
     describe 'GET show' do
       before { get :show, id: <%= file_name %> }
 
-    it { should assign_to(:<%= file_name %>).with(<%= file_name %>) }
-    it { should render_template :show }
-    it { should have_only_fractures(:edit_<%= file_name %>_link) }
+    it { expect(response).to assign_to(:<%= file_name %>).with(<%= file_name %>) }
+    it { expect(response).to render_template :show }
+    it { expect(response).to have_only_fractures(:edit_<%= file_name %>_link) }
     end
 
     describe 'GET new' do
       before { get :new }
 
-      it { should assign_to(:<%= file_name %>).with_kind_of(<%= class_name %>) }
-      #it { should assign_to('<%= file_name %>.parent').with(parent) }
-      it { should render_template :new }
-      it { should have_only_fractures :cancel_new_<%= file_name %>_link }
-      it { should have_a_form.that_is_new.with_path_of(<%= table_name %>_path)}
+      it { expect(response).to assign_to(:<%= file_name %>).with_kind_of(<%= class_name %>) }
+      #it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
+      it { expect(response).to render_template :new }
+      it { expect(response).to have_only_fractures :cancel_new_<%= file_name %>_link }
+      it { expect(response).to have_a_form.that_is_new.with_path_of(<%= table_name %>_path)}
     end
 
     describe 'POST create' do
@@ -68,9 +68,9 @@ describe <%= controller_class_name %>Controller do
           post :create
         end
 
-        it { should redirect_to <%= file_name %>_path(<%= class_name %>.last) }
-        it { should assign_to(:<%= file_name %>).with(<%= class_name %>.last) }
-        #it { should assign_to('<%= file_name %>.parent').with(parent) }
+        it { expect(response).to redirect_to <%= file_name %>_path(<%= class_name %>.last) }
+        it { expect(response).to assign_to(:<%= file_name %>).with(<%= class_name %>.last) }
+        #it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
       end
 
       context 'invalid' do
@@ -78,21 +78,21 @@ describe <%= controller_class_name %>Controller do
           <%= class_name %>.any_instance.stub(:valid?).and_return(false)
           post :create
         end
-        it { should assign_to(:<%= file_name %>).with_kind_of(<%= class_name %>) }
-        #it { should assign_to('<%= file_name %>.parent').with(parent) }
-        it { should render_template :new }
-        it { should have_only_fractures :cancel_new_<%= file_name %>_link }
-        it { should have_a_form.that_is_new.with_path_of(<%= table_name %>_path)}
+        it { expect(response).to assign_to(:<%= file_name %>).with_kind_of(<%= class_name %>) }
+        #it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
+        it { expect(response).to render_template :new }
+        it { expect(response).to have_only_fractures :cancel_new_<%= file_name %>_link }
+        it { expect(response).to have_a_form.that_is_new.with_path_of(<%= table_name %>_path)}
       end
     end
 
     describe 'GET edit' do
       before { get :edit, id: <%= file_name %> }
 
-      it { should assign_to(:<%= file_name %>).with(<%= file_name %>) }
-      it { should render_template :edit }
-      it { should have_only_fractures :cancel_edit_<%= file_name %>_link }
-      it { should have_a_form.that_is_edit.with_path_of(<%= file_name %>_path) }
+      it { expect(response).to assign_to(:<%= file_name %>).with(<%= file_name %>) }
+      it { expect(response).to render_template :edit }
+      it { expect(response).to have_only_fractures :cancel_edit_<%= file_name %>_link }
+      it { expect(response).to have_a_form.that_is_edit.with_path_of(<%= file_name %>_path) }
     end
 
     describe 'PUT update' do
@@ -102,8 +102,8 @@ describe <%= controller_class_name %>Controller do
           put :update, id: <%= file_name %>
         end
 
-        it { should assign_to(:<%= file_name %>).with(<%= file_name %>) }
-        it { should redirect_to <%= file_name %>_path(<%= file_name %>) }
+        it { expect(response).to assign_to(:<%= file_name %>).with(<%= file_name %>) }
+        it { expect(response).to redirect_to <%= file_name %>_path(<%= file_name %>) }
       end
       context 'invalid' do
         before do
@@ -112,10 +112,10 @@ describe <%= controller_class_name %>Controller do
           put :update, id: <%= file_name %>
         end
 
-        it { should assign_to(:<%= file_name %>).with(<%= file_name %>) }
-        it { should render_template :edit }
-        it { should have_only_fractures :cancel_edit_<%= file_name %>_link }
-        it { should have_a_form.that_is_edit.with_path_of(<%= file_name %>_path) }
+        it { expect(response).to assign_to(:<%= file_name %>).with(<%= file_name %>) }
+        it { expect(response).to render_template :edit }
+        it { expect(response).to have_only_fractures :cancel_edit_<%= file_name %>_link }
+        it { expect(response).to have_a_form.that_is_edit.with_path_of(<%= file_name %>_path) }
       end
     end
 
@@ -123,7 +123,7 @@ describe <%= controller_class_name %>Controller do
       before { delete :destroy, id: <%= file_name %> }
 
       it { expect(<%= class_name %>.find_by_id(<%= file_name %>.id)).to be_nil }
-      it { should redirect_to <%= index_helper %>_path }
+      it { expect(response).to redirect_to <%= index_helper %>_path }
     end
   end
 end
