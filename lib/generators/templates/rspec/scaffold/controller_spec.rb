@@ -40,9 +40,9 @@ describe <%= controller_class_name %>Controller do
       it { expect(response).to assign_to(:<%= table_name %>).with_items([<%= file_name %>]) }
       it { expect(response).to render_template :index }
       it { expect(response).to have_only_fractures(:new_<%= file_name %>_link) }
-      end
+    end
+<% end -%>
 
-      <% end -%>
     describe 'GET show' do
       before { get :show, id: <%= file_name %> }
 
