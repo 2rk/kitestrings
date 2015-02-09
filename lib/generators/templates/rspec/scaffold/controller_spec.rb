@@ -46,9 +46,9 @@ describe <%= controller_class_name %>Controller do
     describe 'GET show' do
       before { get :show, id: <%= file_name %> }
 
-    it { expect(response).to assign_to(:<%= file_name %>).with(<%= file_name %>) }
-    it { expect(response).to render_template :show }
-    it { expect(response).to have_only_fractures(:edit_<%= file_name %>_link) }
+      it { expect(response).to assign_to(:<%= file_name %>).with(<%= file_name %>) }
+      it { expect(response).to render_template :show }
+      it { expect(response).to have_only_fractures(:edit_<%= file_name %>_link) }
     end
 
     describe 'GET new' do
