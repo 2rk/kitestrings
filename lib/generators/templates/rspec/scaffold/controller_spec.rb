@@ -12,7 +12,7 @@ describe <%= controller_class_name %>Controller do
   end
 
   # stub strong params
-  before { controller.stub(<%= file_name %>_params: {}) }
+  before { allow(controller).to receive(:<%= file_name %>_params).and_return({}) }
 
   context 'not logged in' do
     before do
@@ -22,7 +22,7 @@ describe <%= controller_class_name %>Controller do
     { index: :get, show: :get, new: :get, create: :post, edit: :get, update: :put,
       destroy: :delete }.each do |v, m|
       it "#{m} #{v} should logout" do
-        self.send(m, v, id: <%= file_name %>)
+        send(m, v, id: <%= file_name %>)
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -56,10 +56,10 @@ describe <%= controller_class_name %>Controller do
       before { get :new }
 
       it { expect(response).to assign_to(:<%= file_name %>).with_kind_of(<%= class_name %>) }
-      #it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
+      # it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
       it { expect(response).to render_template :new }
       it { expect(response).to have_only_fractures :cancel_new_<%= file_name %>_link }
-      it { expect(response).to have_a_form.that_is_new.with_path_of(<%= table_name %>_path)}
+      it { expect(response).to have_a_form.that_is_new.with_path_of(<%= table_name %>_path) }
     end
 
     describe 'POST create' do
@@ -71,7 +71,7 @@ describe <%= controller_class_name %>Controller do
 
         it { expect(response).to redirect_to <%= file_name %>_path(<%= class_name %>.last) }
         it { expect(response).to assign_to(:<%= file_name %>).with(<%= class_name %>.last) }
-        #it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
+        # it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
       end
 
       context 'invalid' do
@@ -80,10 +80,10 @@ describe <%= controller_class_name %>Controller do
           post :create
         end
         it { expect(response).to assign_to(:<%= file_name %>).with_kind_of(<%= class_name %>) }
-        #it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
+        # it { expect(response).to assign_to('<%= file_name %>.parent').with(parent) }
         it { expect(response).to render_template :new }
         it { expect(response).to have_only_fractures :cancel_new_<%= file_name %>_link }
-        it { expect(response).to have_a_form.that_is_new.with_path_of(<%= table_name %>_path)}
+        it { expect(response).to have_a_form.that_is_new.with_path_of(<%= table_name %>_path) }
       end
     end
 

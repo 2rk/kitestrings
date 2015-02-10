@@ -14,6 +14,14 @@ module Kitestrings
         directory "config/environments", "config/environments"
       end
 
+      def copy_seeds_file
+        copy_file "db/seeds.rb", "db/seeds.rb"
+      end
+
+      def copy_rubocop_file
+        copy_file "rubocop/.rubocop.yml", ".rubocop.yml"
+      end
+
       def copy_haml_files
         directory "haml", "lib/templates/haml"
       end
@@ -44,6 +52,7 @@ module Kitestrings
         inject_into_file "app/controllers/application_controller.rb", :after => /protect_from_forgery.*$/ do
           <<-EOF
 
+  respond_to :html
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from CanCan::AccessDenied do |exception|
@@ -52,8 +61,23 @@ module Kitestrings
       render 'public/403', status: 403, layout: 'none'
     end
   end
-          EOF
+EOF
         end
+      end
+
+
+      def setup_application_config
+        generators_configuration = <<-END
+config.generators do |g|
+      g.view_specs false
+    end
+
+    config.app_generators do |g|
+      g.templates.unshift File.expand_path('../lib/templates', __FILE__)
+    end
+        END
+
+        environment generators_configuration
       end
 
     end

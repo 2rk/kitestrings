@@ -1,0 +1,57 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - '**/db/schema.rb'
+    - 'config/**/*'
+    - 'db/migrate/*'
+    - '**/db/migrate/*'
+    - 'lib/templates/**/*'
+    - 'bin/*'
+  RunRailsCops: true
+
+Style/Documentation:
+  Description: Document classes and non-namespace modules.
+  Enabled: false
+
+Style/StringLiterals:
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#consistent-string-literals
+  Enabled: true
+  EnforcedStyle: single_quotes
+  SupportedStyles:
+  - single_quotes
+  - double_quotes
+
+Style/CaseIndentation:
+  Description: Indentation of when in a case/when/[else/]end.
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#indent-when-to-case
+  Enabled: true
+  IndentWhenRelativeTo: case
+  SupportedStyles:
+  - case
+  - end
+  IndentOneStep: true
+
+#LineLength:
+#  Max: 100
+Metrics/LineLength:
+  Description: Limit lines to 100 characters.
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#80-character-limits
+  Enabled: true
+  Max: 100
+  AllowURI: true
+  URISchemes:
+  - http
+  - https
+
+Style/SymbolProc:
+  Description: Use symbols as procs instead of blocks when possible.
+  Enabled: true
+  IgnoredMethods:
+  - respond_to
+#  - configure
+
+Style/Semicolon:
+  Description: Don't use semicolons to terminate expressions.
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-semicolon
+  Enabled: true
+  AllowAsExpressionSeparator: true

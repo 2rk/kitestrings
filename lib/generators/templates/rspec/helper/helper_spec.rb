@@ -12,6 +12,5 @@ require 'rails_helper'
 # end
 <% module_namespacing do -%>
 describe <%= class_name %>Helper do
-
 end
 <% end -%>

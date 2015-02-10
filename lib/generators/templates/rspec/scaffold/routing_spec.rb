@@ -3,7 +3,6 @@ require 'rails_helper'
 <% module_namespacing do -%>
 describe <%= controller_class_name %>Controller do
   describe 'routing' do
-
 <% unless options[:singleton] -%>
     it('routes to #index') { expect(get('/<%= ns_table_name %>')).to route_to('<%= ns_table_name %>#index') }
 <% end -%>

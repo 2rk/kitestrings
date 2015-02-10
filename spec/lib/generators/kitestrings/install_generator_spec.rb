@@ -18,6 +18,7 @@ describe Kitestrings::Generators::InstallGenerator do
   context "check files" do
     %w[
         spec/rails_helper.rb
+        .rubocop.yml
         config/deploy.rb
         config/deploy/integ.rb
         config/deploy/uat.rb
@@ -31,7 +32,7 @@ describe Kitestrings::Generators::InstallGenerator do
         lib/templates/haml/scaffold/show.html.haml
         lib/templates/rails/scaffold_controller/controller.rb
         lib/templates/rspec/helper/helper_spec.rb
-        lib/templates/rspec/integration/request.rb
+        lib/templates/rspec/integration/request_spec.rb
         lib/templates/rspec/model/model_spec.rb
         lib/templates/rspec/scaffold/controller_spec.rb
         lib/templates/rspec/scaffold/routing_spec.rb
@@ -48,6 +49,9 @@ describe Kitestrings::Generators::InstallGenerator do
 
   it "inserted into application_controller" do
     file_contents("app/controllers/application_controller.rb").should match(/rescue_from CanCan::AccessDenied/)
+  end
+  it "appended to db/seeds" do
+    file_contents("db/seeds.rb").should match(/Rake::Task/)
   end
 
   # otherwise it wants to run the specs in the tmp/spec directory
