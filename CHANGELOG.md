@@ -1,5 +1,8 @@
 # Version history:
 
+## 1.2.0
+* reformatting for rubocop
+
 ## Next
 
 * Added Kitestrings::Menu classes/modules to assist with rendering menus in web pages.
