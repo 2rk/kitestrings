@@ -1,13 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -15,7 +15,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
   # clear the test log file before we start.
-  log_file = Rails.root.join("log/test.log")
+  log_file = Rails.root.join('log/test.log')
   File.truncate(log_file, 0) if File.exist?(log_file)
 
   config.include Devise::TestHelpers, type: :controller
@@ -47,8 +47,7 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
-
+  config.order = 'random'
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

@@ -19,7 +19,8 @@ describe <%= controller_class_name %>Controller do
       sign_out :user
     end
 
-    {index: :get, show: :get, new: :get, create: :post, edit: :get, update: :put, destroy: :delete}.each do |v, m|
+    { index: :get, show: :get, new: :get, create: :post, edit: :get, update: :put,
+      destroy: :delete }.each do |v, m|
       it "#{m} #{v} should logout" do
         self.send(m, v, id: <%= file_name %>)
         expect(response).to redirect_to new_user_session_path

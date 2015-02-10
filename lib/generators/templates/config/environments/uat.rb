@@ -1,7 +1,6 @@
-load File.expand_path("../production.rb", __FILE__)
+load File.expand_path('../production.rb', __FILE__)
 
 Rails.application.configure do
-
   config.log_level = :info
 
   # config.airbrake_api_key = 'AIRBRAKE_KEY'
