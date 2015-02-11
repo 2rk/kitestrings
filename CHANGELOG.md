@@ -1,5 +1,9 @@
 # Version history:
 
+## 1.2.1
+* change to fixturen
+* scaffold generators cleaned up (rspec 3)
+
 ## 1.2.0
 * reformatting for rubocop
 

@@ -1,0 +1,7 @@
+inherit_from:
+  - ../../.rubocop.yml
+
+# Allow routing specs to be longer
+Metrics/LineLength:
+  Enabled: true
+  Max: 200

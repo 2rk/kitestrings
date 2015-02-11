@@ -20,6 +20,7 @@ module Kitestrings
 
       def copy_rubocop_file
         copy_file "rubocop/.rubocop.yml", ".rubocop.yml"
+        directory "rubocop/routing", "spec/routing"
       end
 
       def copy_haml_files
@@ -50,8 +51,7 @@ module Kitestrings
 
       def setup_application_controller
         inject_into_file "app/controllers/application_controller.rb", :after => /protect_from_forgery.*$/ do
-          <<-EOF
-
+"
   respond_to :html
 
   unless Rails.application.config.consider_all_requests_local
@@ -60,8 +60,7 @@ module Kitestrings
       # Airbrake.notify(exception)
       render 'public/403', status: 403, layout: 'none'
     end
-  end
-EOF
+  end"
         end
       end
 
@@ -70,6 +69,7 @@ EOF
         generators_configuration = <<-END
 config.generators do |g|
       g.view_specs false
+      g.test_framework :rspec, fixture: true
     end
 
     config.app_generators do |g|
