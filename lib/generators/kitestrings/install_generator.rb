@@ -9,9 +9,7 @@ module Kitestrings
       desc "Copies 2rk relevant templates to the relevant directory"
 
       def copy_config_files
-        copy_file "config/deploy.rb", "config/deploy.rb"
-        directory "config/deploy", "config/deploy"
-        directory "config/environments", "config/environments"
+        directory "config", "config", :recursive => false
       end
 
       def copy_seeds_file
