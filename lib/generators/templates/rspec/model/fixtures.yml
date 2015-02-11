@@ -1,18 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 <% unless attributes.empty? -%>
+<% if attributes.length > 1 %>
+<% defaults = "  <<: *DEFAULTS" -%>
 DEFAULTS: &DEFAULTS
 <% attributes[1..-1].each do |attribute| -%>
   <%= attribute.name %>: <%= attribute.default %>
 <% end -%>
+<% else -%>
+# DEFAULTS: &DEFAULTS
+#  field_1: meme
+<% defaults = "  # <<: *DEFAULTS" -%>
+<% end -%>
 
 <%= table_name.singularize %>:
   <%= attributes.first.name %>: <%= table_name.singularize %>
-  <<: *DEFAULTS
+<%= defaults %>
 
 <%= table_name.singularize %>_other:
-  <%= attributes.first.name %>: <%= table_name.singularize %>_other
-  <<: *DEFAULTS
+  <%= attributes.first.name %>: <%= table_name.singularize %> other
+<%= defaults %>
 <% else -%>
 # one:
 #   column: value
@@ -20,4 +27,3 @@ DEFAULTS: &DEFAULTS
 # two:
 #   column: value
 <% end -%>
-

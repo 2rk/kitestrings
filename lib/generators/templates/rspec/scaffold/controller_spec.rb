@@ -2,6 +2,7 @@ require 'rails_helper'
 
 <% module_namespacing do -%>
 describe <%= controller_class_name %>Controller do
+  fixtures :<%=table_name %>
   common_lets
 
   before :all do

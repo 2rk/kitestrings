@@ -43,6 +43,10 @@ module Kitestrings
         directory "support", "spec/support"
       end
 
+      def copy_rake_task_files
+        directory "tasks", "lib/tasks"
+      end
+
       def copy_app_view_files
         copy_file "views/application/_navigation.html.haml", "app/views/application/_navigation.html.haml"
         copy_file "views/layouts/application.html.haml", "app/views/layouts/application.html.haml"

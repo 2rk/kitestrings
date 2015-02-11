@@ -19,7 +19,7 @@ RSpec.configure do |config|
   File.truncate(log_file, 0) if File.exist?(log_file)
 
   config.include Devise::TestHelpers, type: :controller
-  config.include FactoryGirl::Syntax::Methods
+  # config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
   # ## Mock Framework
   #
