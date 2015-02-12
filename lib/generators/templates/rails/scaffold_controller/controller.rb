@@ -4,17 +4,20 @@ require_dependency "<%= namespaced_file_path %>/application_controller"
 <% end -%>
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
-  before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
+  before_action do
+    authenticate_user!
+    # load_and_authorize_if_present :company do
+    load_and_authorize :<%= singular_table_name %>
+    # end
+  end
 
   def index
-    @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
   end
 
   def show
   end
 
   def new
-    @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
   end
 
   def edit
@@ -44,11 +47,6 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_<%= singular_table_name %>
-    @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
-  end
 
   # Only allow a trusted parameter "white list" through.
   def <%= "#{singular_table_name}_params" %>

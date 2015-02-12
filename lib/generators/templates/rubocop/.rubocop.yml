@@ -6,6 +6,7 @@ AllCops:
     - 'db/migrate/*'
     - '**/db/migrate/*'
     - 'lib/templates/**/*'
+    - 'lib/nested_load_and_authorize.rb'
     - 'bin/*'
   RunRailsCops: true
 

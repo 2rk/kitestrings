@@ -31,6 +31,10 @@ module Kitestrings
         directory "rails", "lib/templates/rails"
       end
 
+      def copy_lib_files
+        directory "lib", "lib"
+      end
+
       def copy_rspec_files
         directory "rspec", "lib/templates/rspec"
       end
@@ -53,10 +57,33 @@ module Kitestrings
         copy_file "views/public/403.html", "app/views/public/403.html"
       end
 
+      # def setup_abilities_with_default_role
+      #   inject_into_file "app/models/ability.rb" do #, :after => /def initialize(user).*$/ do
+      #     "\n"\
+      #     "    case user.role\n"\
+      #     "      when :default\n"\
+      #     "        can :manage, :all\n"\
+      #     "    end\n"\
+      #
+      #   end
+      # end
+
+      def setup_abilities_with_default_role
+        insert_into_file "app/models/ability.rb", :after => "def initialize(user)" do
+          "\n"\
+          "    case user.role\n"\
+          "      when :default\n"\
+          "        can :manage, :all\n"\
+          "    end\n"\
+
+        end
+      end
+
       def setup_application_controller
         inject_into_file "app/controllers/application_controller.rb", :after => /protect_from_forgery.*$/ do
 "
   respond_to :html
+  include NestedLoadAndAuthorize
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from CanCan::AccessDenied do |exception|
@@ -79,6 +106,8 @@ config.generators do |g|
     config.app_generators do |g|
       g.templates.unshift File.expand_path('../lib/templates', __FILE__)
     end
+
+    config.autoload_paths += %W(\#{config.root}/lib)
         END
 
         environment generators_configuration

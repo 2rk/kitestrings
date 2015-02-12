@@ -1,7 +1,12 @@
 # Version history:
 
 ## 1.2.1
-* change to fixturen
+* rewrite of controller spec to use metadata
+* default ability
+* nested_cancan
+
+## 1.2.1
+* change to fixtures
 * scaffold generators cleaned up (rspec 3)
 
 ## 1.2.0
