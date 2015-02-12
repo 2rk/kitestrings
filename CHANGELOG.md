@@ -1,6 +1,9 @@
 # Version history:
 
-## 1.2.1
+## 1.2.3
+* database.yml.teamcity
+
+## 1.2.2
 * rewrite of controller spec to use metadata
 * default ability
 * nested_cancan
